@@ -1,6 +1,9 @@
 import streamlit as st
 import joblib
 import pickle
+import numpy as np
+import pandas as pd
+import seaborn as sns
 
 st.title("항공사 고객만족도 XGboost")
 # 첫 번째 행
