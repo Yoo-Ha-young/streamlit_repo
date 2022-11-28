@@ -98,19 +98,12 @@ def evaluation(airline_test, pred):
 from sklearn.model_selection import GridSearchCV
 
 def xgb_tuning(train_set, test_set, parameters):
-    model = XGBClassifier()
+    xgb_model = XGBClassifier()
     grid = GridSearchCV(model, parameters, scoring="roc_auc", cv=5, n_jobs=-1, refit = True) # cv=K-fold
     grid.fit(train_set, test_set)
     pred= grid.predict(X_test)
     return grid.best_params_, grid.best_score_, pred
 
-
-feature_score = pd.DataFrame({'features': X_train.columns, 'values': xgb_model.feature_importances_})
-feature_score.head()
-
-plt.figure(figsize=(20,10))
-palette = sns.color_palette('coolwarm',10)
-sns.barplot(x='values', y='features', data=feature_score.sort_values(by='values', ascending=False).head(10), palette=palette)
 
 xgb_model = XGBClassifier(n_estimators=100, max_depth=7, learning_rate=0.3, subsample=1)
 xgb_model.fit(X_train, y_train)
